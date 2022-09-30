@@ -1,0 +1,25 @@
+-- Clean Data
+-- Remove Columns
+ALTER TABLE ds_salaries_raw
+DROP MyUnknownColumn;
+
+ALTER TABLE ds_salaries_raw
+DROP work_year;
+
+ALTER TABLE ds_salaries_raw
+DROP salary;
+
+ALTER TABLE ds_salaries_raw
+DROP salary_currency;
+
+-- Remove non-full time employees
+DELETE FROM ds_salaries_raw WHERE employment_type != 'FT';
+
+-- Remove records with experience_level 'EX'
+DELETE FROM ds_salaries_raw WHERE experience_level = 'EX';
+
+-- Replace Machine Learning with ML in job_titles
+UPDATE ds_salaries_raw
+SET job_title = REPLACE (job_title, 'Machine Learning', 'ML')
+WHERE 
+	job_title Like ('%Machine Learning%');
